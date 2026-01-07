@@ -31,34 +31,32 @@
         <source src="rickrollVideo.mp4" type="video/mp4">
     </video>
 
-    <script>
-        const text = ["hi", "hello"];
-        let i = 0;
-        let intervalId = null;
+   <script>
+    const text = ["hi", "hello"];
+    let i = 0;
+    let intervalId = null;
 
-        document.addEventListener("DOMContentLoaded", () => {
-            const video = document.querySelector("video");
-            const heading = document.querySelector("h1");
+    const video = document.getElementById("video");
+    const statustext = document.getElementById("statusText");
 
-            video.addEventListener("play", () => {
-                if (intervalId !== null) return; // prevent multiple intervals
+    video.addEventListener("play", () => {
+        if (intervalId !== null) return;
 
-                intervalId = setInterval(() => {
-                    heading.textContent = text[i % text.length];
-                    i++;
-                }, 1000);
-            });
+        intervalId = setInterval(() => {
+            statustext.textContent = text[i % text.length];
+            i++;
+        }, 1000);
+    });
 
-            video.addEventListener("pause", () => {
-                clearInterval(intervalId);
-                intervalId = null;
-            });
+    video.addEventListener("pause", () => {
+        clearInterval(intervalId);
+        intervalId = null;
+    });
 
-            video.addEventListener("ended", () => {
-                clearInterval(intervalId);
-                intervalId = null;
-            });
-        });
+    video.addEventListener("ended", () => {
+        clearInterval(intervalId);
+        intervalId = null;
+    });
     </script>
 </body>
 </html>
