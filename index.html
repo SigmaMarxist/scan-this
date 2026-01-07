@@ -20,29 +20,46 @@
 
         video {
             width: 100%;
-            height: auto; /* Maintains aspect ratio */
-            max-height: calc(100vh - 60px); /* Ensures both text and video fit */
+            height: auto;
+            max-height: calc(100vh - 60px);
         }
     </style>
-    <script>
-        var text = ["hi","hello"]
-        document.addEventListener("DOMContentLoaded", () => {
-            const video = document.querySelector("video");
-            const heading = document.querySelector("h1");
-            i = 0
-            setInterval(function(){
-                heading.textContent = text[i % length(text)]
-                i += 1
-            }, 1000);            
-                                    
-        });
-    </script>
 </head>
 <body>
     <h1>Watch until the end.</h1>
     <video controls>
         <source src="rickrollVideo.mp4" type="video/mp4">
-        Your browser does not support the video element. Please update your browser or try a different one.
     </video>
+
+    <script>
+        const text = ["hi", "hello"];
+        let i = 0;
+        let intervalId = null;
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const video = document.querySelector("video");
+            const heading = document.querySelector("h1");
+
+            video.addEventListener("play", () => {
+                if (intervalId !== null) return; // prevent multiple intervals
+
+                intervalId = setInterval(() => {
+                    heading.textContent = text[i % text.length];
+                    i++;
+                }, 1000);
+            });
+
+            video.addEventListener("pause", () => {
+                clearInterval(intervalId);
+                intervalId = null;
+            });
+
+            video.addEventListener("ended", () => {
+                clearInterval(intervalId);
+                intervalId = null;
+            });
+        });
+    </script>
 </body>
 </html>
+
